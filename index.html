@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Наша история</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bad+Script&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.5;
+            color: white;
+            height: 100vh;
+            overflow: hidden;
+            background-color: #581c87;
+        }
+        
+        .glow-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .glow-element {
+            position: absolute;
+            animation: smoothGlow 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+            transform-origin: center;
+            color: #a855f7;
+            opacity: 0.4;
+        }
+        
+        @keyframes smoothGlow {
+            0% { opacity: 0.2; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.1); }
+            100% { opacity: 0.2; transform: scale(1); }
+        }
+        
+        .main-content {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+        
+        .header-text {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        
+        .header-quote {
+            font-size: 1.5rem;
+            color: #e9d5ff;
+            font-family: 'Bad Script', cursive;
+        }
+        
+        .timer-container {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(16px);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(192, 132, 252, 0.3);
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .timer-inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .timer-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #e9d5ff;
+            font-family: 'Bad Script', cursive;
+            text-align: center;
+        }
+        
+        .countdown-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            width: 100%;
+        }
+        
+        .countdown-item {
+            background-color: rgba(107, 33, 168, 0.7);
+            border-radius: 0.75rem;
+            padding: 0.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            min-width: 0;
+        }
+        
+        .countdown-item:hover {
+            background-color: rgba(126, 34, 206, 0.7);
+            transform: translateY(-2px);
+        }
+        
+        .countdown-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 0.25rem;
+        }
+        
+        .countdown-label {
+            color: #d8b4fe;
+            font-weight: 500;
+            font-size: 0.875rem;
+            font-family: 'Bad Script', cursive;
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0.75rem 0;
+            width: 100%;
+        }
+        
+        .divider-line {
+            height: 2px;
+            border-radius: 9999px;
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+            flex-grow: 1;
+            max-width: 100px;
+        }
+        
+        .divider-line-1 {
+            background: linear-gradient(to right, #c084fc, #f472b6);
+        }
+        
+        .divider-line-2 {
+            background: linear-gradient(to right, #f472b6, #c084fc);
+            margin: 0 0.5rem;
+        }
+        
+        .divider-line-3 {
+            background: linear-gradient(to right, #c084fc, #f472b6);
+        }
+        
+        @keyframes pulse {
+            50% { opacity: 0.5; }
+        }
+        
+        .start-date {
+            text-align: center;
+            margin-top: 0.75rem;
+        }
+        
+        .start-date-title {
+            font-size: 1.25rem;
+            color: #e9d5ff;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            font-family: 'Bad Script', cursive;
+        }
+        
+        .start-date-value {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: transparent;
+            background-clip: text;
+            background-image: linear-gradient(to right, #f9a8d4, #d8b4fe);
+            margin-bottom: 0.75rem;
+            font-family: 'Bad Script', cursive;
+        }
+        
+        .footer-quote {
+            color: #e9d5ff;
+            font-style: italic;
+            font-size: 1rem;
+            font-family: 'Bad Script', cursive;
+            margin-top: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .countdown-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.5rem;
+            }
+            
+            .header-quote {
+                font-size: 1.25rem;
+            }
+            
+            .timer-title {
+                font-size: 1.25rem;
+            }
+            
+            .countdown-value {
+                font-size: 1.25rem;
+            }
+            
+            .start-date-title, .start-date-value {
+                font-size: 1rem;
+            }
+            
+            .footer-quote {
+                font-size: 0.875rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="glow-container" id="glowContainer"></div>
+    
+    <div class="main-content">
+        <div class="header-text">
+            <p class="header-quote">Каждый момент с тобой бесценный</p>
+        </div>
+        
+        <div class="timer-container">
+            <div class="timer-inner">
+                <h2 class="timer-title">Мы вместе уже</h2>
+                
+                <div class="countdown-container">
+                    <div class="countdown-grid">
+                        <div class="countdown-item">
+                            <div class="countdown-value" id="days">0</div>
+                            <div class="countdown-label">Дней</div>
+                        </div>
+                        <div class="countdown-item">
+                            <div class="countdown-value" id="hours">0</div>
+                            <div class="countdown-label">Часов</div>
+                        </div>
+                        <div class="countdown-item">
+                            <div class="countdown-value" id="minutes">0</div>
+                            <div class="countdown-label">Минут</div>
+                        </div>
+                        <div class="countdown-item">
+                            <div class="countdown-value" id="seconds">0</div>
+                            <div class="countdown-label">Секунд</div>
+                        </div>
+                    </div>
+                    
+                    <div class="divider">
+                        <div class="divider-line divider-line-1"></div>
+                        <div class="divider-line divider-line-2"></div>
+                        <div class="divider-line divider-line-3"></div>
+                    </div>
+                </div>
+                
+                <div class="start-date">
+                    <p class="start-date-title">Всё началось</p>
+                    <div class="start-date-value">07.12.2024</div>
+                    <p class="footer-quote">Каждое мгновение с тобой — это сокровище, которое я храню в своём сердце</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const glowContainer = document.getElementById('glowContainer');
+        const heartCount = 50; // Увеличили количество сердечек
+        
+        // Создаем сердечки по всей площади экрана
+        for (let i = 0; i < heartCount; i++) {
+            const glowElement = document.createElement('div');
+            glowElement.className = 'glow-element';
+            glowElement.innerHTML = '💜';
+            
+            // Равномерное распределение по всему экрану
+            const posX = Math.random() * 100;
+            const posY = Math.random() * 100;
+            
+            // Разные размеры и задержки анимации для разнообразия
+            const size = Math.random() * 0.8 + 0.8;
+            const delay = Math.random() * 3;
+            
+            glowElement.style.top = `${posY}%`;
+            glowElement.style.left = `${posX}%`;
+            glowElement.style.fontSize = `${size}rem`;
+            glowElement.style.animationDelay = `${delay}s`;
+            
+            // Добавляем немного случайности в позиционирование
+            if (posX > 30 && posX < 70 && posY > 30 && posY < 70) {
+                // В центре делаем сердечки немного меньше и прозрачнее
+                glowElement.style.opacity = '0.3';
+                glowElement.style.fontSize = `${size * 0.7}rem`;
+            }
+            
+            glowContainer.appendChild(glowElement);
+        }
+        
+        function updateTimer() {
+            const startDate = new Date('December 7, 2024 03:11:00').getTime();
+            const now = new Date().getTime();
+            const distance = Math.max(0, now - startDate);
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = hours;
+            document.getElementById('minutes').textContent = minutes;
+            document.getElementById('seconds').textContent = seconds;
+        }
+        
+        updateTimer();
+        setInterval(updateTimer, 1000);
+    </script>
+</body>
+</html>
