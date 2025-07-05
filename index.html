@@ -273,19 +273,14 @@
 
     <script>
         const glowContainer = document.getElementById('glowContainer');
-        const heartCount = 50; // Увеличили количество сердечек
-        
-        // Создаем сердечки по всей площади экрана
+        const heartCount = 50; 
         for (let i = 0; i < heartCount; i++) {
             const glowElement = document.createElement('div');
             glowElement.className = 'glow-element';
             glowElement.innerHTML = '💜';
-            
-            // Равномерное распределение по всему экрану
             const posX = Math.random() * 100;
             const posY = Math.random() * 100;
-            
-            // Разные размеры и задержки анимации для разнообразия
+          
             const size = Math.random() * 0.8 + 0.8;
             const delay = Math.random() * 3;
             
@@ -294,9 +289,9 @@
             glowElement.style.fontSize = `${size}rem`;
             glowElement.style.animationDelay = `${delay}s`;
             
-            // Добавляем немного случайности в позиционирование
+           
             if (posX > 30 && posX < 70 && posY > 30 && posY < 70) {
-                // В центре делаем сердечки немного меньше и прозрачнее
+               
                 glowElement.style.opacity = '0.3';
                 glowElement.style.fontSize = `${size * 0.7}rem`;
             }
